@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mono.Mind Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme hub-view-active scheme-classic">
+
+    <div class="dashboard-container" id="app-container">
+        <aside class="sidebar" id="left-sidebar">
+            <div class="brand">
+                <h2 onclick="navigateToTab('hub')" style="cursor:pointer;">Mono<span>.Mind</span></h2>
+            </div>
+            <nav class="nav-tabs" id="sidebar-nav-container">
+                <button class="tab-btn active" data-tab="hub">
+                    <i class="fa-solid fa-house"></i> Master Hub
+                </button>
+                <button class="tab-btn" data-tab="future" id="tab-link-future">
+                    <i class="fa-solid fa-hourglass-long"></i> Future Horizon
+                </button>
+                <button class="tab-btn" data-tab="yearly" id="tab-link-yearly">
+                    <i class="fa-solid fa-calendar-days"></i> Yearly Planner
+                </button>
+                <button class="tab-btn" data-tab="monthly" id="tab-link-monthly">
+                    <i class="fa-solid fa-calendar-month"></i> Monthly Planner
+                </button>
+                <button class="tab-btn" data-tab="weekly" id="tab-link-weekly">
+                    <i class="fa-solid fa-calendar-week"></i> Weekly Planner
+                </button>
+                <button class="tab-btn" data-tab="daily" id="tab-link-daily">
+                    <i class="fa-solid fa-calendar-day"></i> Daily Planner
+                </button>
+                <button class="tab-btn" data-tab="exercise" id="tab-link-exercise">
+                    <i class="fa-solid fa-dumbbell"></i> Exercise Planner
+                </button>
+                <button class="tab-btn" data-tab="meal" id="tab-link-meal">
+                    <i class="fa-solid fa-utensils"></i> Meal Planner
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <p id="live-sidebar-clock">Loading Clock...</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-title-area">
+                    <h1 id="live-header-date">Dashboard Overview</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="theme-toggle" title="Toggle Theme">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+                    <button class="icon-btn"><i class="fa-solid fa-bell"></i></button>
+                    <button class="icon-btn" id="settings-toggle-btn" title="Dashboard Settings">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-grid hub-active" id="dashboard-main-grid">
+                
+                <section class="card preview-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-cubes"></i> <span id="dynamic-block-header">Master Workspace</span></h3>
+                        <span class="badge" id="preview-title">Master Hub Active</span>
+                    </div>
+                    
+                    <div class="preview-window">
+
+                        <div id="view-hub" class="planner-view">
+                            <div class="hub-container">
+                                <div class="hub-hero-branding">
+                                    <h2>Mono<span>.Mind</span></h2>
+                                    
+                                    <div id="hub-chrono-widget" class="chrono-widget display-mode-digital">
+                                        <div class="digital-chrono-view">
+                                            <div id="digital-live-time" class="digital-time-readout">00:00:00</div>
+                                            <div id="digital-live-date" class="digital-date-readout">Loading Calendar Feed...</div>
+                                        </div>
+                                        
+                                        <div class="analog-chrono-view">
+                                            <div class="analog-clock-frame">
+                                                <div class="clock-face-plate">
+                                                    <div class="chrono-hand hour-hand" id="analog-h-hand"></div>
+                                                    <div class="chrono-hand minute-hand" id="analog-m-hand"></div>
+                                                    <div class="chrono-hand second-hand" id="analog-s-hand"></div>
+                                                    <div class="chrono-core-pin"></div>
+                                                </div>
+                                            </div>
+                                            <div id="analog-live-date" class="analog-date-readout">Loading Calendar Feed...</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="welcome-user-tag">Welcome back, <span id="profile-display-name">User</span></div>
+                                </div>
+                                
+                                <div class="panel-header"><h2>Mono.Mind Strategic Hub</h2></div>
+                                <div class="hub-grid">
+                                    <div class="hub-summary-card" id="hub-card-future" onclick="navigateToTab('future')">
+                                        <div class="card-meta"><i class="fa-solid fa-hourglass-long"></i> Future Backlog</div>
+                                        <p id="hub-mirror-future">No multi-cycle milestones logged yet...</p>
+                                        <span class="hub-link-label">Open Future Horizon <i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="hub-summary-card" id="hub-card-yearly" onclick="navigateToTab('yearly')">
+                                        <div class="card-meta"><i class="fa-solid fa-calendar-days"></i> Yearly Vision</div>
+                                        <p id="hub-mirror-yearly">No vision theme set yet...</p>
+                                        <span class="hub-link-label">Go to Yearly Planner <i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="hub-summary-card" id="hub-card-monthly" onclick="navigateToTab('monthly')">
+                                        <div class="card-meta"><i class="fa-solid fa-calendar-month"></i> Monthly Focus</div>
+                                        <p id="hub-mirror-monthly">No focus projects logged for the current month...</p>
+                                        <span class="hub-link-label">Go to Monthly Planner <i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="hub-summary-card" id="hub-card-weekly" onclick="navigateToTab('weekly')">
+                                        <div class="card-meta"><i class="fa-solid fa-calendar-week"></i> Weekly Sprint</div>
+                                        <p id="hub-mirror-weekly">No key tasks specified for this week...</p>
+                                        <span class="hub-link-label">Go to Weekly Planner <i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="hub-summary-card" id="hub-card-exercise" onclick="navigateToTab('exercise')">
+                                        <div class="card-meta"><i class="fa-solid fa-dumbbell"></i> Workout Target</div>
+                                        <p id="hub-mirror-exercise">Hypertrophy split configuration active. Ready to log performance metrics...</p>
+                                        <span class="hub-link-label">Go to Exercise Planner <i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="hub-summary-card" id="hub-card-meal" onclick="navigateToTab('meal')">
+                                        <div class="card-meta"><i class="fa-solid fa-utensils"></i> Monday's Menu Summary</div>
+                                        <p id="hub-mirror-meal">Breakfast: Oats with berries • Dinner: Chicken with lemon herbs...</p>
+                                        <span class="hub-link-label">Go to Meal Planner <i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-future" class="planner-view hidden">
+                            <div class="planner-split-layout">
+                                <div class="planner-main-panel">
+                                    <div class="panel-header"><h2>Future Horizon Backlog & Pipeline</h2></div>
+                                    <div class="form-group">
+                                        <label>Upcoming Quarters & Long-Range Ventures</label>
+                                        <textarea id="data-future-backlog" class="shared-sync" placeholder="Map out micro-business expansions, product scaling maps, or upcoming personal updates..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Prototyping Sandbox & Incubator Notes</label>
+                                        <textarea rows="5" placeholder="Dump raw project mechanics, structural changes, or pipeline scripts before sorting into official years or months..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="planner-side-goals">
+                                    <div class="side-panel">
+                                        <h3><i class="fa-solid fa-rocket"></i> Multi-Year Targets</h3>
+                                        <div class="goal-list" contenteditable="true">
+                                            <div>• Scale automated content pipelines into decoupled micro-services</div>
+                                            <div>• Transition frameworks into ultra-performant custom stacks</div>
+                                        </div>
+                                    </div>
+                                    <div class="side-panel">
+                                        <h3><i class="fa-solid fa-compass"></i> Conceptual Themes</h3>
+                                        <div class="goal-list" contenteditable="true">
+                                            <div>• Deep Modular Architecture</div>
+                                            <div>• Zero Visual Clutter Paradigms</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-yearly" class="planner-view hidden">
+                            <div class="planner-split-layout">
+                                <div class="planner-main-panel">
+                                    <div class="panel-header"><h2>2026 Broad Macro Targets</h2></div>
+                                    <div class="form-group">
+                                        <label>Core Yearly Vision & Theme</label>
+                                        <textarea id="data-year-vision" class="shared-sync" placeholder="What is the overarching focus for this entire year?"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Major Milestones & Roadmaps</label>
+                                        <textarea id="data-year-milestones" class="shared-sync" placeholder="List big roadmap items..."></textarea>
+                                    </div>
+                                    <div class="macro-calendar-container">
+                                        <label class="section-micro-label">Annual Project Span Allocator</label>
+                                        <div class="year-grid-calendar">
+                                            <div class="month-row-strip" contenteditable="true"><span>JAN</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>FEB</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>MAR</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>APR</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>MAY</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>JUN</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>JUL</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>AUG</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>SEP</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>OCT</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>NOV</span><strong>Project Duration Span:</strong> </div>
+                                            <div class="month-row-strip" contenteditable="true"><span>DEC</span><strong>Project Duration Span:</strong> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="planner-side-goals">
+                                    <div class="side-panel">
+                                        <h3><i class="fa-solid fa-hourglass-start"></i> Long-Term Goals</h3>
+                                        <div class="goal-list" contenteditable="true" id="data-lt-goals">
+                                            <div>• Build sustainable digital product ecosystem</div>
+                                            <div>• Reach financial milestone target</div>
+                                        </div>
+                                    </div>
+                                    <div class="side-panel">
+                                        <h3><i class="fa-solid fa-bolt"></i> Short-Term Goals</h3>
+                                        <div class="goal-list" contenteditable="true" id="data-st-goals">
+                                            <div>• Complete interactive UI code skeleton</div>
+                                            <div>• Finalize palette design structure</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-monthly" class="planner-view hidden">
+                            <div class="planner-split-layout">
+                                <div class="planner-main-panel">
+                                    <div class="panel-header"><h2>Monthly Horizon View</h2></div>
+                                    <div class="form-group">
+                                        <label>Current Month Focus Objectives</label>
+                                        <textarea id="data-month-focus" class="shared-sync" placeholder="Break down your yearly targets into specific focus projects for this month..."></textarea>
+                                    </div>
+                                    <div class="monthly-matrix-grid">
+                                        <div class="day-head">Mon</div><div class="day-head">Tue</div><div class="day-head">Wed</div><div class="day-head">Thu</div><div class="day-head">Fri</div><div class="day-head">Sat</div><div class="day-head">Sun</div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">1</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">2</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">3</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">4</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">5</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">6</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">7</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">8</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">9</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">10</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">11</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">12</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">13</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">14</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">15</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">16</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">17</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">18</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">19</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">20</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">21</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">22</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">23</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">24</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">25</span></div>
+                                        <div class="matrix-cell" id="current-live-day" contenteditable="true"><span class="cell-num">26</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">27</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">28</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">29</span></div>
+                                        <div class="matrix-cell" contenteditable="true"><span class="cell-num">30</span></div>
+                                        <div class="matrix-cell grayed"><span class="cell-num">1</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-weekly" class="planner-view hidden">
+                            <div class="planner-split-layout">
+                                <div class="planner-main-panel">
+                                    <div class="panel-header"><h2>Weekly Sprint Architecture</h2></div>
+                                    <div class="form-group">
+                                        <label>Weekly Sprint Action Items</label>
+                                        <textarea id="data-weekly-sprint" class="shared-sync" placeholder="What actionable steps are we shipping this week?"></textarea>
+                                    </div>
+                                    <div class="weekly-strip-columns">
+                                        <div class="week-column-node" contenteditable="true"><h4>MON</h4></div>
+                                        <div class="week-column-node" contenteditable="true"><h4>TUE</h4></div>
+                                        <div class="week-column-node" contenteditable="true"><h4>WED</h4></div>
+                                        <div class="week-column-node" contenteditable="true"><h4>THU</h4></div>
+                                        <div class="week-column-node active-day-node" contenteditable="true"><h4>FRI</h4><small>Active Sprint</small></div>
+                                        <div class="week-column-node" contenteditable="true"><h4>SAT</h4></div>
+                                        <div class="week-column-node" contenteditable="true"><h4>SUN</h4></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-daily" class="planner-view hidden">
+                            <div class="daily-detailed-container">
+                                <div class="panel-header"><h2>Daily Execution Log</h2></div>
+                                <div class="form-group">
+                                    <label>Today's Top Priorities</label>
+                                    <textarea rows="3" placeholder="1. &#10;2. &#10;3. "></textarea>
+                                </div>
+                                <div class="daily-hyper-timeline">
+                                    <label class="section-micro-label">Granular Time Allocator</label>
+                                    <div class="timeline-row-block">
+                                        <div class="hour-marker">08:00</div>
+                                        <div class="slot-partition top-half" contenteditable="true" placeholder="08:00 - 08:30 Block Tasks..."></div>
+                                        <div class="slot-partition bottom-half" contenteditable="true" placeholder="08:30 - 09:00 Block Tasks..."></div>
+                                    </div>
+                                    <div class="timeline-row-block">
+                                        <div class="hour-marker">09:00</div>
+                                        <div class="slot-partition top-half" contenteditable="true" placeholder="09:00 - 09:30 Block Tasks..."></div>
+                                        <div class="slot-partition bottom-half" contenteditable="true" placeholder="09:30 - 10:00 Block Tasks..."></div>
+                                    </div>
+                                    <div class="timeline-row-block">
+                                        <div class="hour-marker">10:00</div>
+                                        <div class="slot-partition top-half" contenteditable="true" placeholder="10:00 - 10:30 Block Tasks..."></div>
+                                        <div class="slot-partition bottom-half" contenteditable="true" placeholder="10:30 - 11:00 Block Tasks..."></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-exercise" class="planner-view hidden">
+                            <div class="meal-planner-container">
+                                <header class="meal-planner-header">
+                                    <h2>Weekly Exercise & Routine Tracker</h2>
+                                    <div class="week-input">
+                                        <label>CYCLE:</label>
+                                        <input type="text" id="live-exercise-week-bound" placeholder="e.g. Strength Phase">
+                                    </div>
+                                </header>
+                                <div class="meal-planner-workspace">
+                                    <div class="days-column">
+                                        <div class="day-card">
+                                            <h3>MONDAY</h3>
+                                            <div class="meal-slot">
+                                                <label>TARGET SPLIT / FOCUS:</label>
+                                                <textarea id="data-exercise-mon-focus" rows="1">Hypertrophy Split - Push Day A</textarea>
+                                            </div>
+                                            <div class="meal-slot">
+                                                <label>CORE MOVEMENT MODULES:</label>
+                                                <textarea id="data-exercise-mon-move" rows="3">Incline Barbell Bench: 4 Sets x 8 Reps&#10;Dumbbell Overhead Press: 3 Sets x 10 Reps&#10;Weighted Tricep Dips: 3 Sets x Max</textarea>
+                                            </div>
+                                            <div class="meal-slot">
+                                                <label>PERFORMANCE & METRIC LOGS:</label>
+                                                <textarea id="data-exercise-mon-log" rows="1">Bench hit 80kg comfortably. Increase load next cycle.</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>TUESDAY</h3>
+                                            <div class="meal-slot"><label>TARGET SPLIT / FOCUS:</label><textarea rows="1">Pull Day - Upper Back Mechanics</textarea></div>
+                                            <div class="meal-slot"><label>CORE MOVEMENT MODULES:</label><textarea rows="3">Weighted Pull-Ups: 4 Sets x 6 Reps&#10;Barbell Rows: 3 Sets x 10 Reps</textarea></div>
+                                            <div class="meal-slot"><label>PERFORMANCE & METRIC LOGS:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>WEDNESDAY</h3>
+                                            <div class="meal-slot"><label>TARGET SPLIT / FOCUS:</label><textarea rows="1">Active Mobility & Conditioning</textarea></div>
+                                            <div class="meal-slot"><label>CORE MOVEMENT MODULES:</label><textarea rows="3">Form Drill Patterns & Combinations&#10;Core Matrix Rotation Holds</textarea></div>
+                                            <div class="meal-slot"><label>PERFORMANCE & METRIC LOGS:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>THURSDAY</h3>
+                                            <div class="meal-slot"><label>TARGET SPLIT / FOCUS:</label><textarea rows="1">Leg Day - Posterior Chain</textarea></div>
+                                            <div class="meal-slot"><label>CORE MOVEMENT MODULES:</label><textarea rows="3">Barbell Squats: 4 Sets x 8 Reps&#10;Romanian Deadlifts: 3 Sets x 10 Reps</textarea></div>
+                                            <div class="meal-slot"><label>PERFORMANCE & METRIC LOGS:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>FRIDAY</h3>
+                                            <div class="meal-slot"><label>TARGET SPLIT / FOCUS:</label><textarea rows="1">Push Day B - Accessory Extensions</textarea></div>
+                                            <div class="meal-slot"><label>CORE MOVEMENT MODULES:</label><textarea rows="3">Incline Dumbbell Press: 3 Sets x 10 Reps&#10;Lateral Cable Raises: 4 Sets x 12 Reps</textarea></div>
+                                            <div class="meal-slot"><label>PERFORMANCE & METRIC LOGS:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>SATURDAY</h3>
+                                            <div class="meal-slot"><label>TARGET SPLIT / FOCUS:</label><textarea rows="1">Rest & Hyper-Recovery</textarea></div>
+                                            <div class="meal-slot"><label>CORE MOVEMENT MODULES:</label><textarea rows="3">Light outdoor walking&#10;Foam rolling protocols</textarea></div>
+                                            <div class="meal-slot"><label>PERFORMANCE & METRIC LOGS:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>SUNDAY</h3>
+                                            <div class="meal-slot"><label>TARGET SPLIT / FOCUS:</label><textarea rows="1">Full Body System Integration</textarea></div>
+                                            <div class="meal-slot"><label>CORE MOVEMENT MODULES:</label><textarea rows="3">Kettlebell Swings: 3 Sets x 20 Reps&#10;Hanging Leg Raises: 3 Sets x Max</textarea></div>
+                                            <div class="meal-slot"><label>PERFORMANCE & METRIC LOGS:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card snack-card">
+                                            <h3>ANYTIME FINISHER NOTES</h3>
+                                            <div class="checklist-item"><input type="checkbox" checked> <span contenteditable="true">10min Core Exhaust Circuit</span></div>
+                                            <div class="checklist-item"><input type="checkbox"> <span contenteditable="true">Farmer Carries (Grip Endurance)</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-column">
+                                        <div class="side-panel">
+                                            <h3>ROUTINE ARCHITECTURE BOARD:</h3>
+                                            <ul class="bullet-list" contenteditable="true">
+                                                <li>Keep structural rest bounds exactly at 90s for main compound movements.</li>
+                                                <li>Incorporate progressive overload targets across every micro-cycle block.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="side-panel">
+                                            <h3>TRACKING TOOLS & GEAR CHECK:</h3>
+                                            <div class="shopping-grid">
+                                                <div class="checklist-item"><input type="checkbox" checked> <span contenteditable="true">Wrist Wraps</span></div>
+                                                <div class="checklist-item"><input type="checkbox" checked> <span contenteditable="true">Lifting Straps</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-meal" class="planner-view hidden">
+                            <div class="meal-planner-container">
+                                <header class="meal-planner-header">
+                                    <h2>Weekly Meal Planner</h2>
+                                    <div class="week-input">
+                                        <label>WEEK:</label>
+                                        <input type="text" id="live-meal-week-bound" placeholder="e.g. 26 June">
+                                    </div>
+                                </header>
+                                <div class="meal-planner-workspace">
+                                    <div class="days-column">
+                                        <div class="day-card">
+                                            <h3>MONDAY</h3>
+                                            <div class="meal-slot">
+                                                <label>BREAKFAST:</label>
+                                                <textarea id="data-meal-mon-b" rows="2">Oats with blueberries, raspberries, chia, sunflower seeds & banana</textarea>
+                                            </div>
+                                            <div class="meal-slot">
+                                                <label>LUNCH:</label>
+                                                <textarea rows="1">Mixed bean salad</textarea>
+                                            </div>
+                                            <div class="meal-slot">
+                                                <label>DINNER:</label>
+                                                <textarea id="data-meal-mon-d" rows="2">Chicken with lemon herbs and green beans</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>TUESDAY</h3>
+                                            <div class="meal-slot"><label>BREAKFAST:</label><textarea rows="2">Avocado, toast, mixed seeds, tomato, olive oil, cream cheese</textarea></div>
+                                            <div class="meal-slot"><label>LUNCH:</label><textarea rows="1">Veggie lasagne</textarea></div>
+                                            <div class="meal-slot"><label>DINNER:</label><textarea rows="1">Ravioli and spinach salad</textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>WEDNESDAY</h3>
+                                            <div class="meal-slot"><label>BREAKFAST:</label><textarea rows="2">Almond nut butter with cocoa and banana wrap + chia seeds</textarea></div>
+                                            <div class="meal-slot"><label>LUNCH:</label><textarea rows="2">Ham and cheese sandwich with lentil chips</textarea></div>
+                                            <div class="meal-slot"><label>DINNER:</label><textarea rows="2">Stir fry tofu and stir fry veg in soya sauce</textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>THURSDAY</h3>
+                                            <div class="meal-slot"><label>BREAKFAST:</label><textarea rows="2">Oats with strawberries, yoghurt, raspberries & chia seeds</textarea></div>
+                                            <div class="meal-slot"><label>LUNCH:</label><textarea rows="1">Pizza baguettes</textarea></div>
+                                            <div class="meal-slot"><label>DINNER:</label><textarea rows="1">Pie and mash</textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>FRIDAY</h3>
+                                            <div class="meal-slot"><label>BREAKFAST:</label><textarea rows="2">Oats with blueberries, raspberries, chia, sunflower seeds & banana</textarea></div>
+                                            <div class="meal-slot"><label>LUNCH:</label><textarea rows="2">Bean wrap with avocado, tomatoes and seeds</textarea></div>
+                                            <div class="meal-slot"><label>DINNER:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>SATURDAY</h3>
+                                            <div class="meal-slot"><label>BREAKFAST:</label><textarea rows="1">Waffles & nutella :)</textarea></div>
+                                            <div class="meal-slot"><label>LUNCH:</label><textarea rows="1"></textarea></div>
+                                            <div class="meal-slot"><label>DINNER:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card">
+                                            <h3>SUNDAY</h3>
+                                            <div class="meal-slot"><label>BREAKFAST:</label><textarea rows="2">Pancakes with blueberries, chia, sunflower seeds & banana</textarea></div>
+                                            <div class="meal-slot"><label>LUNCH:</label><textarea rows="1"></textarea></div>
+                                            <div class="meal-slot"><label>DINNER:</label><textarea rows="1"></textarea></div>
+                                        </div>
+                                        <div class="day-card snack-card">
+                                            <h3>ANYTIME SNACK IDEAS</h3>
+                                            <div class="checklist-item"><input type="checkbox" checked> <span contenteditable="true">Mixed nuts</span></div>
+                                            <div class="checklist-item"><input type="checkbox" checked> <span contenteditable="true">Nut butter and dark chocolate</span></div>
+                                            <div class="checklist-item"><input type="checkbox"> <span contenteditable="true">Popcorn</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-column">
+                                        <div class="side-panel">
+                                            <h3>RECIPES IDEAS BOARD:</h3>
+                                            <ul class="bullet-list" contenteditable="true">
+                                                <li>Try Mary Berry's asian salmon with ginger and chillies</li>
+                                            </ul>
+                                        </div>
+                                        <div class="side-panel">
+                                            <h3>INGREDIENTS TO ADD TO SHOPPING:</h3>
+                                            <div class="shopping-grid">
+                                                <div class="checklist-item"><input type="checkbox"> <span contenteditable="true">Tofu</span></div>
+                                                <div class="checklist-item"><input type="checkbox"> <span contenteditable="true">Oats</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section class="card tasks-card side-widget">
+                    <div class="card-header"><h3><i class="fa-solid fa-clock"></i> Schedule</h3></div>
+                    <div class="hourly-timeline">
+                        <div class="time-slot"><span class="time">08:00</span><div class="task-line empty"></div></div>
+                        <div class="time-slot"><span class="time">09:00</span><div class="task-line filled">Morning Review</div></div>
+                    </div>
+                </section>
+
+                <section class="card events-card side-widget">
+                    <div class="card-header"><h3><i class="fa-solid fa-cake-candles"></i> Events</h3></div>
+                    <div class="events-list">
+                        <div class="event-item holiday">
+                            <div class="event-icon"><i class="fa-solid fa-flag"></i></div>
+                            <div class="event-details"><h4>Public Holiday</h4><p>Jan 1</p></div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+        
+        <div class="settings-modal-overlay" id="settings-modal">
+            <div class="settings-modal-card">
+                <div class="settings-modal-header">
+                    <h3><i class="fa-solid fa-sliders"></i> Engine Customization Panel</h3>
+                    <button class="close-modal-btn" id="settings-close-btn">&times;</button>
+                </div>
+                <div class="settings-modal-body">
+                    
+                    <div class="settings-section-group">
+                        <h4><i class="fa-solid fa-user-gear"></i> Edit Profile Fields</h4>
+                        <div class="settings-input-row">
+                            <div class="input-item-box">
+                                <label>User Account Label Name</label>
+                                <input type="text" id="setting-input-name" value="User">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section-group">
+                        <h4><i class="fa-solid fa-clock"></i> Hub Clock Face Style</h4>
+                        <p class="settings-help-text">Choose the display configuration rendered in the central Hero branding segment.</p>
+                        <div class="clock-type-toggle-row">
+                            <label class="check-node">
+                                <input type="radio" name="clock-style-toggle" value="digital" checked> Minimal Digital Readout
+                            </label>
+                            <label class="check-node">
+                                <input type="radio" name="clock-style-toggle" value="analog"> Clean Mechanical Analog Face
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section-group">
+                        <h4><i class="fa-solid fa-toggle-on"></i> Configure Dashboard Tab Visibility</h4>
+                        <div class="visibility-checkbox-grid">
+                            <label class="check-node"><input type="checkbox" id="check-visibility-future" checked data-target="future"> Future Horizon</label>
+                            <label class="check-node"><input type="checkbox" id="check-visibility-yearly" checked data-target="yearly"> Yearly Planner</label>
+                            <label class="check-node"><input type="checkbox" id="check-visibility-monthly" checked data-target="monthly"> Monthly Planner</label>
+                            <label class="check-node"><input type="checkbox" id="check-visibility-weekly" checked data-target="weekly"> Weekly Planner</label>
+                            <label class="check-node"><input type="checkbox" id="check-visibility-daily" checked data-target="daily"> Daily Planner</label>
+                            <label class="check-node"><input type="checkbox" id="check-visibility-exercise" checked data-target="exercise"> Exercise Planner</label>
+                            <label class="check-node"><input type="checkbox" id="check-visibility-meal" checked data-target="meal"> Meal Planner</label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section-group">
+                        <h4><i class="fa-solid fa-palette"></i> Select Active Structural Theme Combo</h4>
+                        <div class="color-combo-picker-row">
+                            <div class="combo-swatch-card active" data-scheme="classic">
+                                <div class="swatch-chips"><span style="background:#DDC7A0;"></span><span style="background:#7E9276;"></span></div>
+                                <div class="swatch-label">Classic Sand & Sage</div>
+                            </div>
+                            <div class="combo-swatch-card" data-scheme="blackgold">
+                                <div class="swatch-chips"><span style="background:#0F1112;"></span><span style="background:#D4AF37;"></span></div>
+                                <div class="swatch-label">Premium Black & Gold</div>
+                            </div>
+                            <div class="combo-swatch-card" data-scheme="slatecoral">
+                                <div class="swatch-chips"><span style="background:#34495e;"></span><span style="background:#e74c3c;"></span></div>
+                                <div class="swatch-label">Slate & Deep Coral</div>
+                            </div>
+                            <div class="combo-swatch-card" data-scheme="nordicforest">
+                                <div class="swatch-chips"><span style="background:#2E3440;"></span><span style="background:#88C0D0;"></span></div>
+                                <div class="swatch-label">Nordic Ice & Frost</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.tab-btn');
+        const previewTitle = document.getElementById('preview-title');
+        const dynamicBlockHeader = document.getElementById('dynamic-block-header');
+        const views = document.querySelectorAll('.planner-view');
+        const bodyElement = document.body;
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const mainGrid = document.getElementById('dashboard-main-grid');
+
+        const settingsToggleBtn = document.getElementById('settings-toggle-btn');
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsCloseBtn = document.getElementById('settings-close-btn');
+
+        const chronoWidget = document.getElementById('hub-chrono-widget');
+        const clockStyleRadios = document.querySelectorAll('input[name="clock-style-toggle"]');
+
+        const dataFutureBacklog = document.getElementById('data-future-backlog');
+        const dataYearVision = document.getElementById('data-year-vision');
+        const dataMonthFocus = document.getElementById('data-month-focus');
+        const dataWeeklySprint = document.getElementById('data-weekly-sprint');
+        const dataLtGoals = document.getElementById('data-lt-goals');
+        const dataMealMonB = document.getElementById('data-meal-mon-b');
+        const dataMealMonD = document.getElementById('data-meal-mon-d');
+        const dataExerciseMonFocus = document.getElementById('data-exercise-mon-focus');
+
+        const hubMirrorFuture = document.getElementById('hub-mirror-future');
+        const hubMirrorYearly = document.getElementById('hub-mirror-yearly');
+        const hubMirrorMonthly = document.getElementById('hub-mirror-monthly');
+        const hubMirrorWeekly = document.getElementById('hub-mirror-weekly');
+        const hubMirrorMeal = document.getElementById('hub-mirror-meal');
+        const hubMirrorExercise = document.getElementById('hub-mirror-exercise');
+
+        function runLiveChronoEngine() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const second = now.getSeconds();
+
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const dateLongOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+            const SouthAfricaTimeStr = now.toLocaleTimeString('en-ZA', timeOptions);
+            const SouthAfricaDateStr = now.toLocaleDateString('en-ZA', dateLongOptions);
+
+            document.getElementById('live-sidebar-clock').textContent = SouthAfricaTimeStr;
+            document.getElementById('live-header-date').textContent = SouthAfricaDateStr;
+            
+            document.getElementById('digital-live-time').textContent = SouthAfricaTimeStr;
+            document.getElementById('digital-live-date').textContent = SouthAfricaDateStr;
+            document.getElementById('analog-live-date').textContent = SouthAfricaDateStr;
+
+            const hourDeg = (hour * 30) + (minute * 0.5);
+            const minDeg = (minute * 6) + (second * 0.1);
+            const secDeg = second * 6;
+
+            document.getElementById('analog-h-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            document.getElementById('analog-m-hand').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+            document.getElementById('analog-s-hand').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+        }
+
+        setInterval(runLiveChronoEngine, 1000);
+        runLiveChronoEngine();
+
+        clockStyleRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                chronoWidget.className = `chrono-widget display-mode-${radio.value}`;
+            });
+        });
+
+        function synchronizeDataState() {
+            if(hubMirrorFuture) hubMirrorFuture.textContent = dataFutureBacklog.value || "No upcoming initiatives mapped yet.";
+            if(hubMirrorYearly) hubMirrorYearly.textContent = dataYearVision.value || "No yearly theme set yet.";
+            if(hubMirrorMonthly) hubMirrorMonthly.textContent = dataMonthFocus.value || "No macro goals focused for this cycle.";
+            if(hubMirrorWeekly) hubMirrorWeekly.textContent = dataWeeklySprint.value || "No strategic micro tasks specified.";
+            
+            if(dataMealMonB && dataMealMonD && hubMirrorMeal) {
+                const bFast = dataMealMonB.value.split(',')[0];
+                const dinner = dataMealMonD.value.split('and')[0];
+                hubMirrorMeal.textContent = `Breakfast: ${bFast}... • Dinner: ${dinner}...`;
+            }
+            if(dataExerciseMonFocus && hubMirrorExercise) {
+                hubMirrorExercise.textContent = `Monday Focus: ${dataExerciseMonFocus.value}.`;
+            }
+        }
+
+        function navigateToTab(tabId) {
+            document.querySelector('.tab-btn.active').classList.remove('active');
+            const targetButton = document.querySelector(`[data-tab="${tabId}"]`);
+            if (targetButton) targetButton.classList.add('active');
+
+            let headerText = "Master Workspace";
+            if(tabId === 'future') headerText = "Future Focus";
+            if(tabId === 'yearly') headerText = "Year Focus";
+            if(tabId === 'monthly') headerText = "Monthly Focus";
+            if(tabId === 'weekly') headerText = "Weekly Focus";
+            if(tabId === 'daily') headerText = "Daily Focus";
+            if(tabId === 'exercise') headerText = "Exercise Focus";
+            if(tabId === 'meal') headerText = "Meal Focus";
+
+            dynamicBlockHeader.textContent = headerText;
+            previewTitle.textContent = (tabId === 'hub' ? 'Master Hub' : targetButton.innerText) + " Active";
+
+            if (tabId === 'hub') {
+                bodyElement.classList.add('hub-view-active');
+                mainGrid.classList.add('hub-active');
+            } else {
+                bodyElement.classList.remove('hub-view-active');
+                mainGrid.classList.remove('hub-active');
+            }
+
+            views.forEach(view => view.classList.add('hidden'));
+            const activeView = document.getElementById(`view-${tabId}`);
+            if (activeView) activeView.classList.remove('hidden');
+            synchronizeDataState();
+        }
+
+        settingsToggleBtn.addEventListener('click', () => settingsModal.classList.add('open'));
+        settingsCloseBtn.addEventListener('click', () => settingsModal.classList.remove('open'));
+        settingsModal.addEventListener('click', (e) => { if(e.target === settingsModal) settingsModal.classList.remove('open'); });
+
+        const inputName = document.getElementById('setting-input-name');
+        const profileDisplayName = document.getElementById('profile-display-name');
+        if(inputName) {
+            inputName.addEventListener('input', () => {
+                profileDisplayName.textContent = inputName.value || "User";
+            });
+        }
+
+        const checkboxes = document.querySelectorAll('.visibility-checkbox-grid input');
+        checkboxes.forEach(box => {
+            box.addEventListener('change', () => {
+                const target = box.getAttribute('data-target');
+                const sidebarTabButton = document.getElementById(`tab-link-${target}`);
+                const masterHubOverviewCard = document.getElementById(`hub-card-${target}`);
+                
+                if (box.checked) {
+                    if(sidebarTabButton) sidebarTabButton.style.display = "flex";
+                    if(masterHubOverviewCard) masterHubOverviewCard.style.display = "flex";
+                } else {
+                    if(sidebarTabButton) sidebarTabButton.style.display = "none";
+                    if(masterHubOverviewCard) masterHubOverviewCard.style.display = "none";
+                }
+            });
+        });
+
+        const themeSwatchCards = document.querySelectorAll('.combo-swatch-card');
+        themeSwatchCards.forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelector('.combo-swatch-card.active').classList.remove('active');
+                card.classList.add('active');
+                bodyElement.classList.remove('scheme-classic', 'scheme-blackgold', 'scheme-slatecoral', 'scheme-nordicforest');
+                const cleanSchemeName = card.getAttribute('data-scheme');
+                bodyElement.classList.add(`scheme-${cleanSchemeName}`);
+            });
+        });
+
+        document.querySelectorAll('.shared-sync').forEach(item => {
+            item.addEventListener('input', synchronizeDataState);
+        });
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => navigateToTab(btn.getAttribute('data-tab')));
+        });
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (bodyElement.classList.contains('dark-theme')) {
+                bodyElement.classList.remove('dark-theme');
+                bodyElement.classList.add('light-theme');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            } else {
+                bodyElement.classList.remove('light-theme');
+                bodyElement.classList.add('dark-theme');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            }
+        });
+
+        synchronizeDataState();
+    </script>
+</body>
+</html>
