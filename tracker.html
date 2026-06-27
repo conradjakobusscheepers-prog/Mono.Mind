@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mono.Mind Tracker Pro</title>
+    <link rel="stylesheet" href="tracker.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme scheme-classic" id="tracker-body">
+
+    <div class="tracker-app-container">
+        <header class="tracker-header">
+            <div class="tracker-brand">
+                <h2>Mono<span>.Tracker Pro</span></h2>
+                <p id="tracker-live-chrono">Temporal Feed Loading...</p>
+            </div>
+            <div class="tracker-actions">
+                <button class="icon-btn" id="tracker-settings-btn" title="Tracker Configuration" onclick="toggleTrackerSettings(true)">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <a href="index.html" class="back-home-btn"><i class="fa-solid fa-arrow-left"></i> Return to Planner</a>
+            </div>
+        </header>
+
+        <div class="tracker-grid">
+            
+            <div class="tracker-col">
+                <div class="tracker-card interactive-node" id="block-water" onclick="openLoggerModal('Water Intake & Hydration Engine', 'water')">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-droplet"></i> Hydration Log</h3>
+                        <span class="metric-badge" id="display-water">0 / 2500 ml</span>
+                    </div>
+                    <div class="water-progress-track">
+                        <div class="water-progress-fill" id="fill-water" style="width: 0%"></div>
+                    </div>
+                    <div class="card-stats-preview-row">
+                        <div><small>Remaining</small><strong id="sub-water-rem">2500 ml</strong></div>
+                        <div><small>Hydration Level</small><strong id="sub-water-pct">0%</strong></div>
+                    </div>
+                    <small class="click-insight-hint"><i class="fa-solid fa-square-plus"></i> Click to adjust intake values</small>
+                </div>
+
+                <div class="tracker-card interactive-node" id="block-sleep" onclick="openLoggerModal('Sleep Metrics Architecture', 'sleep')">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-moon"></i> Sleep Efficiency</h3>
+                        <span class="metric-badge" id="display-sleep">0 hrs / 8.0 Target</span>
+                    </div>
+                    <div class="card-stats-preview-row">
+                        <div><small>Quality Level</small><strong id="sub-sleep-qual">Good / Rested</strong></div>
+                        <div><small>Sleep Debt</small><strong id="sub-sleep-debt">0.0 hrs</strong></div>
+                    </div>
+                    <small class="click-insight-hint"><i class="fa-solid fa-square-plus"></i> Click to update architecture entries</small>
+                </div>
+
+                <div class="tracker-card interactive-node" id="block-weight" onclick="openLoggerModal('Body Mass & Composition Index', 'weight')">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-weight-scale"></i> Body Composition</h3>
+                        <span class="metric-badge" id="display-weight">0.0 kg</span>
+                    </div>
+                    <div class="card-stats-preview-row">
+                        <div><small>Skeletal Muscle</small><strong id="sub-weight-smm">0.0 kg</strong></div>
+                        <div><small>Body Fat %</small><strong id="sub-weight-bfp">0.0%</strong></div>
+                        <div><small>Daily Target</small><strong id="sub-weight-cal">0 kcal</strong></div>
+                    </div>
+                    <small class="click-insight-hint"><i class="fa-solid fa-square-plus"></i> Click to edit mass composition array</small>
+                </div>
+
+                <div class="tracker-card" id="block-habit">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-bolt"></i> Habit Consistency Matrix</h3>
+                    </div>
+                    <div class="habit-streak-list">
+                        <div class="habit-streak-node">
+                            <span class="habit-name">Progressive Compound Heavy Lift</span>
+                            <div class="streak-bubbles">
+                                <span class="bubble active">M</span><span class="bubble active">T</span><span class="bubble active">W</span>
+                                <span class="bubble" onclick="this.classList.toggle('active')">T</span><span class="bubble" onclick="this.classList.toggle('active')">F</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tracker-col">
+                <div class="tracker-card interactive-node" id="block-cycle" onclick="openLoggerModal('Cycle Phase Predictor Engine', 'cycle')">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-calendar-heart"></i> Cycle Architecture</h3>
+                        <span class="metric-badge" id="display-cycle">Day 1 / Phase: Luteal</span>
+                    </div>
+                    <div class="card-stats-preview-row">
+                        <div><small>Basal Temp</small><strong id="sub-cycle-temp">36.5 °C</strong></div>
+                        <div><small>Fertility Status</small><strong id="sub-cycle-fert">Medium Window</strong></div>
+                        <div><small>Core Symptoms</small><strong id="sub-cycle-symp">None</strong></div>
+                    </div>
+                    <small class="click-insight-hint"><i class="fa-solid fa-square-plus"></i> Click to record physical symptoms</small>
+                </div>
+
+                <div class="tracker-card interactive-node" id="block-budget" onclick="openLoggerModal('Capital Flow Allocation Matrix', 'budget')">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-wallet"></i> Capital Flow Architecture</h3>
+                    </div>
+                    <div class="budget-data-grid">
+                        <div class="budget-block">
+                            <h4>Monthly Gross Base</h4>
+                            <div class="numeric-output" id="display-monthly-gross">R 0</div>
+                        </div>
+                        <div class="budget-block">
+                            <h4>Weekly Limit Remaining</h4>
+                            <div class="numeric-output highlighted" id="display-weekly-limit">R 0</div>
+                        </div>
+                    </div>
+                    <div class="card-stats-preview-row" style="margin-top: 4px;">
+                        <div><small>Expenses Accrued</small><strong id="sub-budget-acc">R 0</strong></div>
+                        <div><small>Fixed Debit Deductions</small><strong id="sub-budget-deb">R 0</strong></div>
+                    </div>
+                    <small class="click-insight-hint"><i class="fa-solid fa-square-plus"></i> Click to execute entry logs</small>
+                </div>
+
+                <div class="tracker-card" id="block-mood">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-brain"></i> Mood Architect</h3>
+                    </div>
+                    <div class="mood-selection-row">
+                        <button class="mood-btn" onclick="setMoodActive(this)" title="Peak Performance"><i class="fa-solid fa-face-laugh-beam"></i></button>
+                        <button class="mood-btn active" onclick="setMoodActive(this)" title="Stable Focus Flow"><i class="fa-solid fa-face-smile"></i></button>
+                        <button class="mood-btn" onclick="setMoodActive(this)" title="Adrenal Fatigue / Low Energy"><i class="fa-solid fa-face-tired"></i></button>
+                        <button class="mood-btn" onclick="setMoodActive(this)" title="Nervous System Overdrive / Stress"><i class="fa-solid fa-face-frown-open"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tracker-col span-full-mobile">
+                <div class="tracker-card credential-vault-card" id="block-vault">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Info Vault</h3>
+                    </div>
+                    
+                    <div id="vault-auth-screen" class="vault-auth-wall">
+                        <p class="vault-lock-notice"><i class="fa-solid fa-lock"></i> Credential data array locked. Input master passkey code to view profiles.</p>
+                        <div class="pin-input-group">
+                            <input type="password" id="vault-pin-input" placeholder="••••" maxlength="4">
+                            <button onclick="authenticateVaultMasterKey()">Unlock</button>
+                        </div>
+                        <p id="vault-auth-error" class="vault-error-text hidden">Passkey verification mismatch. Try again.</p>
+                    </div>
+
+                    <div class="vault-secured-body hidden" id="vault-secured-content">
+                        <div id="vault-entries-list"></div>
+                        
+                        <div class="vault-adder-form">
+                            <h5>Add New Vault Profile</h5>
+                            <input type="text" id="v-new-site" placeholder="App/Site Name">
+                            <input type="text" id="v-new-user" placeholder="Username/Email">
+                            <input type="text" id="v-new-pass" placeholder="Password Target">
+                            <button onclick="addNewVaultAccountRecord()">Commit Profile to Vault</button>
+                        </div>
+                        <button class="vault-lock-btn" onclick="lockVaultInstantly()"><i class="fa-solid fa-key"></i> Lock Vault Array</button>
+                    </div>
+                </div>
+
+                <div class="tracker-card interactive-node" id="block-therapy" onclick="openLoggerModal('Therapy Synthesis Records', 'therapy')">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-heart-pulse"></i> Therapy Log</h3>
+                    </div>
+                    <div class="split-view-preview-box">
+                        <div>
+                            <h5>Pre-Appointment Alignment Check</h5>
+                            <p id="display-therapy-pre">Tracking sensory anchors and system stress states...</p>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 6px;">
+                            <h5>Post-Session Integration Synthesis</h5>
+                            <p id="display-therapy-post">No cognitive restructuring data logged yet.</p>
+                        </div>
+                    </div>
+                    <small class="click-insight-hint"><i class="fa-solid fa-pen-to-square"></i> Click to expand and write notes</small>
+                </div>
+
+                <div class="tracker-card" id="block-ideas">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-note-sticky"></i> Notes Canvas</h3>
+                        <button class="notes-new-doc-btn" onclick="createNewNoteDocument()"><i class="fa-solid fa-plus"></i> New Note</button>
+                    </div>
+                    <div class="samsung-notes-preview-grid" id="notes-recent-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-modal-overlay" id="notes-editor-modal">
+        <div class="settings-modal-card notes-modal-card">
+            <div class="settings-modal-header">
+                <h3><i class="fa-solid fa-file-pen"></i> Notes Document Editor</h3>
+                <button class="close-modal-btn" onclick="toggleNotesEditorModal(false)">&times;</button>
+            </div>
+            <div class="settings-modal-body">
+                <div class="input-field-box">
+                    <label>Document Title</label>
+                    <input type="text" id="note-edit-title" placeholder="Untitled Document Title">
+                </div>
+                <div class="input-field-box" style="margin-top: 14px;">
+                    <label>Body Content Canvas</label>
+                    <textarea id="note-edit-body" rows="10" placeholder="Start typing canvas parameters, configuration schemas, worldbuilding maps..."></textarea>
+                </div>
+            </div>
+            <div style="display:flex; justify-content: space-between; gap:10px; margin-top:20px;">
+                <button class="vault-lock-btn" id="note-delete-btn" style="margin:0; width:auto; padding:10px 20px;" onclick="deleteCurrentNoteDocument()"><i class="fa-solid fa-trash"></i> Delete</button>
+                <button class="modal-save-btn" onclick="saveActiveNoteDocument()">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-modal-overlay" id="logger-modal">
+        <div class="settings-modal-card">
+            <div class="settings-modal-header">
+                <h3><i class="fa-solid fa-pen-to-square"></i> Edit <span id="logger-module-title">Metrics</span></h3>
+                <button class="close-modal-btn" onclick="toggleLoggerModal(false)">&times;</button>
+            </div>
+            <div class="settings-modal-body" id="logger-form-body">
+                </div>
+            <div style="display:flex; justify-content: flex-end; gap:10px; margin-top:20px;">
+                <button class="modal-save-btn" onclick="saveLoggerDataChanges()">Commit Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-modal-overlay" id="tracker-settings-modal">
+        <div class="settings-modal-card">
+            <div class="settings-modal-header">
+                <h3><i class="fa-solid fa-sliders"></i> Tracker Engine Dashboard Config</h3>
+                <button class="close-modal-btn" onclick="toggleTrackerSettings(false)">&times;</button>
+            </div>
+            <div class="settings-modal-body">
+                <div class="settings-section-group">
+                    <h4><i class="fa-solid fa-toggle-on"></i> Show/Hide Tracker Block Modules</h4>
+                    <div class="visibility-checkbox-grid">
+                        <label class="check-node"><input type="checkbox" id="v-chk-water" checked onchange="toggleBlockVisibility('water', this.checked)"> Hydration</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-sleep" checked onchange="toggleBlockVisibility('sleep', this.checked)"> Sleep Efficiency</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-weight" checked onchange="toggleBlockVisibility('weight', this.checked)"> Body Composition</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-habit" checked onchange="toggleBlockVisibility('habit', this.checked)"> Habit Board</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-cycle" checked onchange="toggleBlockVisibility('cycle', this.checked)"> Cycle Architecture</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-budget" checked onchange="toggleBlockVisibility('budget', this.checked)"> Capital Flow Matrix</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-mood" checked onchange="toggleBlockVisibility('mood', this.checked)"> Mood Architecture</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-vault" checked onchange="toggleBlockVisibility('vault', this.checked)"> Info Vault</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-therapy" checked onchange="toggleBlockVisibility('therapy', this.checked)"> Therapy Logs</label>
+                        <label class="check-node"><input type="checkbox" id="v-chk-ideas" checked onchange="toggleBlockVisibility('ideas', this.checked)"> Samsung Notes</label>
+                    </div>
+                </div>
+                <div class="settings-section-group">
+                    <h4><i class="fa-solid fa-palette"></i> Sync Structural Theme Combo</h4>
+                    <div class="color-combo-picker-row">
+                        <div class="combo-swatch-card" id="swatch-classic" onclick="changeTrackerTheme('classic', this)">
+                            <div class="swatch-chips"><span style="background:#DDC7A0;"></span><span style="background:#7E9276;"></span></div>
+                            <div class="swatch-label">Classic Sand & Sage</div>
+                        </div>
+                        <div class="combo-swatch-card" id="swatch-blackgold" onclick="changeTrackerTheme('blackgold', this)">
+                            <div class="swatch-chips"><span style="background:#0F1112;"></span><span style="background:#D4AF37;"></span></div>
+                            <div class="swatch-label">Premium Black & Gold</div>
+                        </div>
+                        <div class="combo-swatch-card" id="swatch-slatecoral" onclick="changeTrackerTheme('slatecoral', this)">
+                            <div class="swatch-chips"><span style="background:#34495e;"></span><span style="background:#e74c3c;"></span></div>
+                            <div class="swatch-label">Slate & Deep Coral</div>
+                        </div>
+                        <div class="combo-swatch-card" id="swatch-nordicforest" onclick="changeTrackerTheme('nordicforest', this)">
+                            <div class="swatch-chips"><span style="background:#2E3440;"></span><span style="background:#88C0D0;"></span></div>
+                            <div class="swatch-label">Nordic Ice & Frost</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // High-Density Default Memory Arrays Parameters Fallbacks
+        const defaultState = {
+            water: { current: 1250, goal: 2500 },
+            sleep: { hours: 7.5, target: 8.0, quality: 'Good / Rested' },
+            weight: { current: 75.4, smm: 34.2, bfp: 14.5, cal: 2800 },
+            cycle: { day: 14, phase: 'Luteal', temp: 36.7, fert: 'Medium Window', symptoms: 'Mild Cramps' },
+            budget: { monthly: 14000, weekly: 3500, accrued: 1200, debit: 4800 },
+            therapy: { pre: 'Tracking sensory anchors and system stress states...', post: 'No cognitive restructuring data logged yet.' },
+            vault: [
+                { id: 1, site: 'ComfyUI Local Engine', user: 'Admin_Node_01', pass: 'EncryptedSecure_901x' },
+                { id: 2, site: 'Project Zomboid Server', user: 'MasaToki_Host', pass: 'TheBiteClub_Admin_Node' }
+            ],
+            notes: [
+                { id: 1, title: 'Aethelgard Plot Outline', body: 'Chapter 26 animation parameters require deep tracking loops for Kenji’s form fields.', updated: Date.now() },
+                { id: 2, title: 'Hyundai Getz Prints', body: 'Housing screen mounts measure out to precisely 25cm across inside interior shell.', updated: Date.now() - 5000 }
+            ],
+            visibility: { water: true, sleep: true, weight: true, habit: true, cycle: true, budget: true, mood: true, vault: true, therapy: true, ideas: true },
+            theme: 'classic'
+        };
+
+        // Active State Initialization via LocalStorage Persistence Switchboard
+        let trackerState = JSON.parse(localStorage.getItem('MONO_TRACKER_DATA')) || defaultState;
+        let currentActiveKey = '';
+        let currentEditingNoteId = null;
+
+        function persistTrackerStateToStorage() {
+            localStorage.setItem('MONO_TRACKER_DATA', JSON.stringify(trackerState));
+        }
+
+        // Global Core Synchronizer: Update Main Dashboard UI nodes using saved cache array
+        function updateGlobalDashboardInterface() {
+            // 1. Water
+            document.getElementById('display-water').textContent = `${trackerState.water.current} / ${trackerState.water.goal} ml`;
+            const wPct = Math.min(Math.round((trackerState.water.current / trackerState.water.goal) * 100), 100) || 0;
+            document.getElementById('fill-water').style.width = `${wPct}%`;
+            document.getElementById('sub-water-pct').textContent = `${wPct}%`;
+            document.getElementById('sub-water-rem').textContent = `${Math.max(trackerState.water.goal - trackerState.water.current, 0)} ml`;
+
+            // 2. Sleep
+            document.getElementById('display-sleep').textContent = `${trackerState.sleep.hours} hrs / ${trackerState.sleep.target} Target`;
+            document.getElementById('sub-sleep-qual').textContent = trackerState.sleep.quality;
+            const debt = (trackerState.sleep.hours - trackerState.sleep.target).toFixed(1);
+            document.getElementById('sub-sleep-debt').textContent = `${debt >= 0 ? '+' : ''}${debt} hrs`;
+
+            // 3. Weight Mass Composition
+            document.getElementById('display-weight').textContent = `${trackerState.weight.current} kg`;
+            document.getElementById('sub-weight-smm').textContent = `${trackerState.weight.smm} kg`;
+            document.getElementById('sub-weight-bfp').textContent = `${trackerState.weight.bfp}%`;
+            document.getElementById('sub-weight-cal').textContent = `${trackerState.weight.cal.toLocaleString()} kcal`;
+
+            // 4. Cycle Phase predictor
+            document.getElementById('display-cycle').textContent = `Day ${trackerState.cycle.day} / Phase: ${trackerState.cycle.phase}`;
+            document.getElementById('sub-cycle-temp').textContent = `${trackerState.cycle.temp} °C`;
+            document.getElementById('sub-cycle-fert').textContent = trackerState.cycle.fert;
+            document.getElementById('sub-cycle-symp').textContent = trackerState.cycle.symptoms;
+
+            // 5. Capital Flow
+            document.getElementById('display-monthly-gross').textContent = `R ${trackerState.budget.monthly.toLocaleString()}`;
+            document.getElementById('display-weekly-limit').textContent = `R ${trackerState.budget.weekly.toLocaleString()}`;
+            document.getElementById('sub-budget-acc').textContent = `R ${trackerState.budget.accrued.toLocaleString()}`;
+            document.getElementById('sub-budget-deb').textContent = `R ${trackerState.budget.debit.toLocaleString()}`;
+
+            // 6. Therapy text areas
+            document.getElementById('display-therapy-pre').textContent = trackerState.therapy.pre || 'Empty.';
+            document.getElementById('display-therapy-post').textContent = trackerState.therapy.post || 'Empty.';
+
+            // 7. Render dynamic components
+            renderVaultAccountsRecordsList();
+            renderSamsungNotesGridPreviews();
+
+            // 8. Apply saved system styles layouts configuration settings
+            document.getElementById('tracker-body').className = `dark-theme scheme-${trackerState.theme}`;
+            document.querySelectorAll('.combo-swatch-card').forEach(c => c.classList.remove('active'));
+            const targetSwatch = document.getElementById(`swatch-${trackerState.theme}`);
+            if (targetSwatch) targetSwatch.classList.add('active');
+
+            // Apply block hide/show visibility toggles configuration settings
+            for (let blockId in trackerState.visibility) {
+                const checked = trackerState.visibility[blockId];
+                const blockEl = document.getElementById(`block-${blockId}`);
+                if (blockEl) blockEl.style.display = checked ? 'flex' : 'none';
+                const chkBox = document.getElementById(`v-chk-${blockId}`);
+                if (chkBox) chkBox.checked = checked;
+            }
+        }
+
+        // Open Logger Form & Dynamic Fields Generator Factory Router
+        function openLoggerModal(title, key) {
+            currentActiveKey = key;
+            document.getElementById('logger-module-title').textContent = title;
+            const container = document.getElementById('logger-form-body');
+            container.innerHTML = ''; 
+
+            let htmlFields = '';
+            if (key === 'water') {
+                htmlFields = `
+                    <div class="input-field-box"><label>Current Intake Logged (ml)</label><input type="number" id="in-water-curr" value="${trackerState.water.current}"></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Total Hydration Daily Target (ml)</label><input type="number" id="in-water-goal" value="${trackerState.water.goal}"></div>`;
+            } else if (key === 'sleep') {
+                htmlFields = `
+                    <div class="input-field-box"><label>Actual Hours Slept</label><input type="number" id="in-sleep-hrs" step="0.1" value="${trackerState.sleep.hours}"></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Optimal Target Goal (hrs)</label><input type="number" id="in-sleep-tgt" step="0.1" value="${trackerState.sleep.target}"></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Efficiency Quality Label</label>
+                        <select id="in-sleep-qual">
+                            <option ${trackerState.sleep.quality.includes('Excellent')?'selected':''}>Excellent / Deep REM</option>
+                            <option ${trackerState.sleep.quality.includes('Good')?'selected':''}>Good / Rested</option>
+                            <option ${trackerState.sleep.quality.includes('Poor')?'selected':''}>Poor / Interrupted</option>
+                        </select></div>`;
+            } else if (key === 'weight') {
+                htmlFields = `
+                    <div class="input-field-box"><label>Total Scale Mass (kg)</label><input type="number" id="in-weight-curr" step="0.1" value="${trackerState.weight.current}"></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Skeletal Muscle Mass (kg)</label><input type="number" id="in-weight-smm" step="0.1" value="${trackerState.weight.smm}"></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Body Fat Percentage %</label><input type="number" id="in-weight-bfp" step="0.1" value="${trackerState.weight.bfp}"></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Daily Calorie Target (kcal)</label><input type="number" id="in-weight-cal" value="${trackerState.weight.cal}"></div>`;
+            } else if (key === 'cycle') {
+                htmlFields = `
+                    <div class="grid-inputs-2">
+                        <div class="input-field-box"><label>Current Cycle Day</label><input type="number" id="in-cycle-day" value="${trackerState.cycle.day}"></div>
+                        <div class="input-field-box"><label>Current Phase Tag</label><input type="text" id="in-cycle-phase" value="${trackerState.cycle.phase}"></div>
+                    </div>
+                    <div class="grid-inputs-2" style="margin-top:12px;">
+                        <div class="input-field-box"><label>Basal Temp (°C)</label><input type="number" id="in-cycle-temp" step="0.1" value="${trackerState.cycle.temp}"></div>
+                        <div class="input-field-box"><label>Fertility Status Window</label><input type="text" id="in-cycle-fert" value="${trackerState.cycle.fert}"></div>
+                    </div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Log Active Physical Symptoms</label><input type="text" id="in-cycle-symp" value="${trackerState.cycle.symptoms}"></div>`;
+            } else if (key === 'budget') {
+                htmlFields = `
+                    <div class="grid-inputs-2">
+                        <div class="input-field-box"><label>Monthly Income Base</label><input type="number" id="in-budget-gross" value="${trackerState.budget.monthly}"></div>
+                        <div class="input-field-box"><label>Weekly Allowance Goal</label><input type="number" id="in-budget-week" value="${trackerState.budget.weekly}"></div>
+                    </div>
+                    <div class="grid-inputs-2" style="margin-top:12px;">
+                        <div class="input-field-box"><label>Log New Expenses Accrued</label><input type="number" id="in-budget-acc" value="${trackerState.budget.accrued}"></div>
+                        <div class="input-field-box"><label>Fixed Debit Orders Array</label><input type="number" id="in-budget-deb" value="${trackerState.budget.debit}"></div>
+                    </div>`;
+            } else if (key === 'therapy') {
+                htmlFields = `
+                    <div class="input-field-box"><label>Pre-Appointment Focus / Triggers</label><textarea id="in-therapy-pre" rows="3">${trackerState.therapy.pre}</textarea></div>
+                    <div class="input-field-box" style="margin-top:12px;"><label>Post-Session Cognitive Integration Synthesis</label><textarea id="in-therapy-post" rows="3">${trackerState.therapy.post}</textarea></div>`;
+            }
+
+            container.innerHTML = htmlFields;
+            toggleLoggerModal(true);
+        }
+
+        function toggleLoggerModal(show) {
+            const modal = document.getElementById('logger-modal');
+            if(show) modal.classList.add('open');
+            else modal.classList.remove('open');
+        }
+
+        function saveLoggerDataChanges() {
+            const key = currentActiveKey;
+            if (key === 'water') {
+                trackerState.water.current = parseInt(document.getElementById('in-water-curr').value) || 0;
+                trackerState.water.goal = parseInt(document.getElementById('in-water-goal').value) || 2500;
+            } else if (key === 'sleep') {
+                trackerState.sleep.hours = parseFloat(document.getElementById('in-sleep-hrs').value) || 0;
+                trackerState.sleep.target = parseFloat(document.getElementById('in-sleep-tgt').value) || 8.0;
+                trackerState.sleep.quality = document.getElementById('in-sleep-qual').value;
+            } else if (key === 'weight') {
+                trackerState.weight.current = parseFloat(document.getElementById('in-weight-curr').value) || 0;
+                trackerState.weight.smm = parseFloat(document.getElementById('in-weight-smm').value) || 0;
+                trackerState.weight.bfp = parseFloat(document.getElementById('in-weight-bfp').value) || 0;
+                trackerState.weight.cal = parseInt(document.getElementById('in-weight-cal').value) || 0;
+            } else if (key === 'cycle') {
+                trackerState.cycle.day = parseInt(document.getElementById('in-cycle-day').value) || 1;
+                trackerState.cycle.phase = document.getElementById('in-cycle-phase').value;
+                trackerState.cycle.temp = parseFloat(document.getElementById('in-cycle-temp').value) || 36.5;
+                trackerState.cycle.fert = document.getElementById('in-cycle-fert').value;
+                trackerState.cycle.symptoms = document.getElementById('in-cycle-symp').value;
+            } else if (key === 'budget') {
+                trackerState.budget.monthly = parseInt(document.getElementById('in-budget-gross').value) || 0;
+                trackerState.budget.weekly = parseInt(document.getElementById('in-budget-week').value) || 0;
+                trackerState.budget.accrued = parseInt(document.getElementById('in-budget-acc').value) || 0;
+                trackerState.budget.debit = parseInt(document.getElementById('in-budget-deb').value) || 0;
+            } else if (key === 'therapy') {
+                trackerState.therapy.pre = document.getElementById('in-therapy-pre').value;
+                trackerState.therapy.post = document.getElementById('in-therapy-post').value;
+            }
+
+            persistTrackerStateToStorage();
+            updateGlobalDashboardInterface();
+            toggleLoggerModal(false);
+        }
+
+        // ================= PASSPHRASE ACCOUNT VAULT SUBSYSTEMS =================
+        function authenticateVaultMasterKey() {
+            const input = document.getElementById('vault-pin-input').value;
+            const errorText = document.getElementById('vault-auth-error');
+            if (input === '0000') {
+                errorText.classList.add('hidden');
+                document.getElementById('vault-auth-screen').classList.add('hidden');
+                document.getElementById('vault-secured-content').classList.remove('hidden');
+                document.getElementById('vault-pin-input').value = ''; 
+                renderVaultAccountsRecordsList();
+            } else {
+                errorText.classList.remove('hidden');
+            }
+        }
+
+        function lockVaultInstantly() {
+            document.getElementById('vault-secured-content').classList.add('hidden');
+            document.getElementById('vault-auth-screen').classList.remove('hidden');
+        }
+
+        function renderVaultAccountsRecordsList() {
+            const container = document.getElementById('vault-entries-list');
+            container.innerHTML = '';
+            trackerState.vault.forEach(acc => {
+                const strip = document.createElement('div');
+                strip.className = 'vault-entry-strip';
+                strip.innerHTML = `
+                    <div>
+                        <strong>${acc.site}:</strong> 
+                        <span style="color:var(--text-muted); margin-left:6px;">${acc.user}</span>
+                    </div>
+                    <div style="font-family:monospace; font-size:0.85rem; color:var(--accent-color);">${acc.pass}</div>
+                    <button class="vault-del-inline-btn" onclick="deleteVaultRecord(${acc.id})">&times;</button>
+                `;
+                container.appendChild(strip);
+            });
+        }
+
+        function addNewVaultAccountRecord() {
+            const siteIn = document.getElementById('v-new-site');
+            const userIn = document.getElementById('v-new-user');
+            const passIn = document.getElementById('v-new-pass');
+
+            if (!siteIn.value || !passIn.value) return;
+
+            const newRecord = {
+                id: Date.now(),
+                site: siteIn.value,
+                user: userIn.value || 'N/A',
+                pass: passIn.value
+            };
+
+            trackerState.vault.push(newRecord);
+            persistTrackerStateToStorage();
+            renderVaultAccountsRecordsList();
+
+            // Clear inputs
+            siteIn.value = ''; userIn.value = ''; passIn.value = '';
+        }
+
+        function deleteVaultRecord(id) {
+            trackerState.vault = trackerState.vault.filter(item => item.id !== id);
+            persistTrackerStateToStorage();
+            renderVaultAccountsRecordsList();
+        }
+
+        // ================= INTEGRATED ADVANCED SAMSUNG NOTES SYSTEM =================
+        function renderSamsungNotesGridPreviews() {
+            const container = document.getElementById('notes-recent-list');
+            container.innerHTML = '';
+            
+            // Sort records so most recently updated appears at peak array head index
+            const sortedNotes = [...trackerState.notes].sort((a,b) => b.updated - a.updated).slice(0, 5);
+
+            if(sortedNotes.length === 0) {
+                container.innerHTML = `<div class="text-log-preview-box" style="grid-column: span 2;">No notes logged. Click + New Note above to open canvas.</div>`;
+                return;
+            }
+
+            sortedNotes.forEach(note => {
+                const previewCard = document.createElement('div');
+                previewCard.className = 'note-mini-grid-card';
+                previewCard.onclick = () => openNotesDocumentEditor(note.id);
+                previewCard.innerHTML = `
+                    <h4>${note.title || 'Untitled note'}</h4>
+                    <p>${note.body ? note.body.substring(0, 65) + (note.body.length > 65 ? '...' : '') : 'Empty text canvas...'}</p>
+                    <span class="note-time-stamp">${new Date(note.updated).toLocaleDateString('en-ZA')}</span>
+                `;
+                container.appendChild(previewCard);
+            });
+        }
+
+        function openNotesDocumentEditor(id) {
+            currentEditingNoteId = id;
+            const targetNote = trackerState.notes.find(n => n.id === id);
+            if (!targetNote) return;
+
+            document.getElementById('note-edit-title').value = targetNote.title;
+            document.getElementById('note-edit-body').value = targetNote.body;
+            document.getElementById('note-delete-btn').style.display = 'block';
+            toggleNotesEditorModal(true);
+        }
+
+        function createNewNoteDocument() {
+            currentEditingNoteId = null;
+            document.getElementById('note-edit-title').value = '';
+            document.getElementById('note-edit-body').value = '';
+            document.getElementById('note-delete-btn').style.display = 'none';
+            toggleNotesEditorModal(true);
+        }
+
+        function toggleNotesEditorModal(show) {
+            const modal = document.getElementById('notes-editor-modal');
+            if(show) modal.classList.add('open');
+            else modal.classList.remove('open');
+        }
+
+        function saveActiveNoteDocument() {
+            const titleVal = document.getElementById('note-edit-title').value.trim() || 'Untitled Document';
+            const bodyVal = document.getElementById('note-edit-body').value;
+
+            if (currentEditingNoteId === null) {
+                // Instantiate brand new notebook record entry
+                const newNote = {
+                    id: Date.now(),
+                    title: titleVal,
+                    body: bodyVal,
+                    updated: Date.now()
+                };
+                trackerState.notes.push(newNote);
+            } else {
+                // Update currently mapped existing record entry array fields index
+                const targetNote = trackerState.notes.find(n => n.id === currentEditingNoteId);
+                if (targetNote) {
+                    targetNote.title = titleVal;
+                    targetNote.body = bodyVal;
+                    targetNote.updated = Date.now();
+                }
+            }
+
+            persistTrackerStateToStorage();
+            renderSamsungNotesGridPreviews();
+            toggleNotesEditorModal(false);
+        }
+
+        function deleteCurrentNoteDocument() {
+            if (currentEditingNoteId === null) return;
+            trackerState.notes = trackerState.notes.filter(n => n.id !== currentEditingNoteId);
+            persistTrackerStateToStorage();
+            renderSamsungNotesGridPreviews();
+            toggleNotesEditorModal(false);
+        }
+
+        // ================= GLOBAL CONFIG SETTINGS PANEL UTILITIES =================
+        function toggleTrackerSettings(show) {
+            const sModal = document.getElementById('tracker-settings-modal');
+            if(show) sModal.classList.add('open');
+            else sModal.classList.remove('open');
+        }
+
+        function toggleBlockVisibility(id, checked) {
+            trackerState.visibility[id] = checked;
+            persistTrackerStateToStorage();
+            const targetBlock = document.getElementById(`block-${id}`);
+            if (targetBlock) targetBlock.style.display = checked ? 'flex' : 'none';
+        }
+
+        function changeTrackerTheme(schemeName, element) {
+            trackerState.theme = schemeName;
+            persistTrackerStateToStorage();
+            
+            document.querySelectorAll('.combo-swatch-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            
+            document.getElementById('tracker-body').className = `dark-theme scheme-${schemeName}`;
+        }
+
+        function setMoodActive(btn) {
+            btn.parentElement.querySelector('.mood-btn.active').classList.remove('active');
+            btn.classList.add('active');
+        }
+
+        function runTrackerChrono() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+            document.getElementById('tracker-live-chrono').textContent = now.toLocaleDateString('en-ZA', options);
+        }
+        setInterval(runTrackerChrono, 1000);
+        runTrackerChrono();
+
+        // Boot-up Execution Array Synchronization
+        updateGlobalDashboardInterface();
+    </script>
+</body>
+</html>

@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mono.Mind Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for UI icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark-theme hub-view-active scheme-classic">
 
     <div class="dashboard-container" id="app-container">
+        <!-- SIDEBAR: Navigation Tabs -->
         <aside class="sidebar" id="left-sidebar">
             <div class="brand">
                 <h2 onclick="navigateToTab('hub')" style="cursor:pointer;">Mono<span>.Mind</span></h2>
@@ -48,7 +51,9 @@
             </div>
         </aside>
 
+        <!-- MAIN CONTENT AREA -->
         <main class="main-content">
+            <!-- Header -->
             <header class="main-header">
                 <div class="header-title-area">
                     <h1 id="live-header-date">Dashboard Overview</h1>
@@ -64,8 +69,10 @@
                 </div>
             </header>
 
+            <!-- Grid Layout for Dashboard Widgets -->
             <div class="dashboard-grid hub-active" id="dashboard-main-grid">
                 
+                <!-- Planner Dynamic Main Window Container -->
                 <section class="card preview-card">
                     <div class="card-header">
                         <h3><i class="fa-solid fa-cubes"></i> <span id="dynamic-block-header">Master Workspace</span></h3>
@@ -74,17 +81,21 @@
                     
                     <div class="preview-window">
 
+                        <!-- 0. MASTER HUB & HIGHLIGHTS PREVIEW -->
                         <div id="view-hub" class="planner-view">
                             <div class="hub-container">
                                 <div class="hub-hero-branding">
                                     <h2>Mono<span>.Mind</span></h2>
                                     
+                                    <!-- Dynamic Minimalist/Analog Clock Face Wrapper Node -->
                                     <div id="hub-chrono-widget" class="chrono-widget display-mode-digital">
+                                        <!-- State View A: Minimalist Digital -->
                                         <div class="digital-chrono-view">
                                             <div id="digital-live-time" class="digital-time-readout">00:00:00</div>
                                             <div id="digital-live-date" class="digital-date-readout">Loading Calendar Feed...</div>
                                         </div>
                                         
+                                        <!-- State View B: Minimalist Geometric Analog -->
                                         <div class="analog-chrono-view">
                                             <div class="analog-clock-frame">
                                                 <div class="clock-face-plate">
@@ -133,10 +144,17 @@
                                         <p id="hub-mirror-meal">Breakfast: Oats with berries • Dinner: Chicken with lemon herbs...</p>
                                         <span class="hub-link-label">Go to Meal Planner <i class="fa-solid fa-arrow-right"></i></span>
                                     </div>
+                                    <!-- ADDED: Dedicated Navigation Card to Tracker App Interface Module -->
+                                    <div class="hub-summary-card" id="hub-card-tracker" onclick="window.location.href='tracker.html'" style="background: linear-gradient(135deg, var(--bg-card), rgba(126, 146, 118, 0.05)); border-color: rgba(126, 146, 118, 0.25);">
+                                        <div class="card-meta" style="color: var(--accent-color);"><i class="fa-solid fa-gauge-high"></i> Metric Trackers Core</div>
+                                        <p>Vitals execution engine active: Water counters, health cycles, budget limits, account vault matrix, and notebook modules...</p>
+                                        <span class="hub-link-label" style="color: var(--accent-color);">Open Standalone Trackers <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FUTURE HORIZON VIEW -->
                         <div id="view-future" class="planner-view hidden">
                             <div class="planner-split-layout">
                                 <div class="planner-main-panel">
@@ -169,6 +187,7 @@
                             </div>
                         </div>
 
+                        <!-- 1. YEARLY PLANNER VIEW -->
                         <div id="view-yearly" class="planner-view hidden">
                             <div class="planner-split-layout">
                                 <div class="planner-main-panel">
@@ -218,6 +237,7 @@
                             </div>
                         </div>
 
+                        <!-- 2. MONTHLY PLANNER VIEW -->
                         <div id="view-monthly" class="planner-view hidden">
                             <div class="planner-split-layout">
                                 <div class="planner-main-panel">
@@ -264,6 +284,7 @@
                             </div>
                         </div>
 
+                        <!-- 3. WEEKLY PLANNER VIEW -->
                         <div id="view-weekly" class="planner-view hidden">
                             <div class="planner-split-layout">
                                 <div class="planner-main-panel">
@@ -285,6 +306,7 @@
                             </div>
                         </div>
 
+                        <!-- 4. DAILY PLANNER VIEW -->
                         <div id="view-daily" class="planner-view hidden">
                             <div class="daily-detailed-container">
                                 <div class="panel-header"><h2>Daily Execution Log</h2></div>
@@ -313,6 +335,7 @@
                             </div>
                         </div>
 
+                        <!-- 5. EXERCISE PLANNER VIEW -->
                         <div id="view-exercise" class="planner-view hidden">
                             <div class="meal-planner-container">
                                 <header class="meal-planner-header">
@@ -401,6 +424,7 @@
                             </div>
                         </div>
 
+                        <!-- 6. MEAL PLANNER VIEW -->
                         <div id="view-meal" class="planner-view hidden">
                             <div class="meal-planner-container">
                                 <header class="meal-planner-header">
@@ -492,6 +516,7 @@
                     </div>
                 </section>
 
+                <!-- Side Widgets -->
                 <section class="card tasks-card side-widget">
                     <div class="card-header"><h3><i class="fa-solid fa-clock"></i> Schedule</h3></div>
                     <div class="hourly-timeline">
@@ -513,6 +538,7 @@
             </div>
         </main>
         
+        <!-- ================= MODAL: SETTINGS INTERFACE PANEL ================= -->
         <div class="settings-modal-overlay" id="settings-modal">
             <div class="settings-modal-card">
                 <div class="settings-modal-header">
@@ -554,6 +580,8 @@
                             <label class="check-node"><input type="checkbox" id="check-visibility-daily" checked data-target="daily"> Daily Planner</label>
                             <label class="check-node"><input type="checkbox" id="check-visibility-exercise" checked data-target="exercise"> Exercise Planner</label>
                             <label class="check-node"><input type="checkbox" id="check-visibility-meal" checked data-target="meal"> Meal Planner</label>
+                            <!-- ADDED: Tracker Panel Display Toggle inside Visibility Matrix -->
+                            <label class="check-node"><input type="checkbox" id="check-visibility-tracker" checked data-target="tracker"> Metric Trackers Card</label>
                         </div>
                     </div>
                     
@@ -585,6 +613,7 @@
 
     </div>
 
+    <!-- Script Architecture -->
     <script>
         const buttons = document.querySelectorAll('.tab-btn');
         const previewTitle = document.getElementById('preview-title');
@@ -640,9 +669,14 @@
             const minDeg = (minute * 6) + (second * 0.1);
             const secDeg = second * 6;
 
-            document.getElementById('analog-h-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-            document.getElementById('analog-m-hand').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
-            document.getElementById('analog-s-hand').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            const hHand = document.getElementById('analog-h-hand');
+            const mHand = document.getElementById('analog-m-hand');
+            const sHand = document.getElementById('analog-s-hand');
+            if(hHand && mHand && sHand) {
+                hHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+                mHand.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+                sHand.style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            }
         }
 
         setInterval(runLiveChronoEngine, 1000);
@@ -650,7 +684,7 @@
 
         clockStyleRadios.forEach(radio => {
             radio.addEventListener('change', () => {
-                chronoWidget.className = `chrono-widget display-mode-${radio.value}`;
+                if(chronoWidget) chronoWidget.className = `chrono-widget display-mode-${radio.value}`;
             });
         });
 
