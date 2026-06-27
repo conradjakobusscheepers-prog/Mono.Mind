@@ -30,6 +30,17 @@ body { background-color: var(--bg-main); color: var(--text-main); padding: 24px;
 .icon-btn:hover { border-color: var(--accent-color); background-color: var(--accent-dim); }
 .tracker-actions { display: flex; align-items: center; }
 
+/* --- Global Mobile Viewport Safety Reset --- */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Hard-stops horizontal code overflow dead in its tracks */
+    width: 100%;
+}
+
+img, textarea, input, select {
+    max-width: 100%; /* Keeps high-density inputs scaling inside their parent cards */
+}
+
 /* --- CORE INTERFACE MESH BLOCKS --- */
 .tracker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .tracker-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
@@ -129,3 +140,43 @@ body { background-color: var(--bg-main); color: var(--text-main); padding: 24px;
 .hidden { display: none !important; }
 
 @media (max-width: 900px) { .tracker-grid { grid-template-columns: 1fr; } .span-full-mobile { grid-column: auto; } }
+
+/* ================= MOBILE MEDIA LAYOUT QUERY STACK ENGINE ================= */
+@media (max-width: 900px) {
+    body {
+        padding: 12px; /* Gives small screen viewports breathing room */
+    }
+    
+    .tracker-app-container {
+        gap: 16px;
+    }
+    
+    .tracker-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .tracker-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .tracker-grid {
+        grid-template-columns: 1fr !important; /* Forces cards to stack beautifully */
+        gap: 16px;
+    }
+
+    .card-stats-preview-row {
+        grid-template-columns: 1fr !important; /* Stacks internal micro health slots on ultra narrow displays */
+        gap: 6px;
+    }
+    
+    .budget-data-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .span-full-mobile {
+        grid-column: auto;
+    }
+}

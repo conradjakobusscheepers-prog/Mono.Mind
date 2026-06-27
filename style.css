@@ -16,6 +16,17 @@
     --card-hover-bg: rgba(24, 27, 28, 0.1);
 }
 
+/* --- Global Mobile Viewport Safety Reset --- */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Hard-stops horizontal code overflow dead in its tracks */
+    width: 100%;
+}
+
+img, textarea, input, select {
+    max-width: 100%; /* Keeps high-density inputs scaling inside their parent cards */
+}
+
 /* ================= THEME REPOSITORIES COMBO PALETTES ================= */
 body.scheme-classic.dark-theme { --text-main: #DDC7A0; --accent-color: #7E9276; --accent-dim: rgba(126, 146, 118, 0.15); }
 body.scheme-classic.light-theme { --bg-main: #DDC7A0; --text-main: #242926; --accent-color: #7E9276; --accent-dim: rgba(126, 146, 118, 0.25); }
