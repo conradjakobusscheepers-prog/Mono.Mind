@@ -19,6 +19,17 @@
 /* --- Global Mobile Viewport Safety Reset --- */
 html, body {
     max-width: 100%;
+    overflow-x: hidden; 
+    width: 100%;
+}
+
+textarea, input, select {
+    max-width: 100%; 
+}
+
+/* --- Global Mobile Viewport Safety Reset --- */
+html, body {
+    max-width: 100%;
     overflow-x: hidden; /* Hard-stops horizontal code overflow dead in its tracks */
     width: 100%;
 }
@@ -254,39 +265,64 @@ body.hub-view-active .main-header h1 { opacity: 0; pointer-events: none; }
 /* ================= MOBILE MEDIA LAYOUT QUERY STACK ENGINE ================= */
 @media (max-width: 900px) {
     body {
-        padding: 12px; /* Gives small screen viewports breathing room */
+        padding: 12px;
+        height: auto;
+        overflow-y: auto; /* Allows scrolling down through the stacked modules */
     }
-    
-    .tracker-app-container {
-        gap: 16px;
-    }
-    
-    .tracker-header {
+
+    .dashboard-container {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-    
-    .tracker-actions {
-        width: 100%;
-        justify-content: space-between;
+        height: auto;
     }
 
-    .tracker-grid {
-        grid-template-columns: 1fr !important; /* Forces cards to stack beautifully */
+    /* Force the main dashboard layouts to stack vertically instead of side-by-side */
+    .dashboard-grid, 
+    .dashboard-grid.hub-active {
+        grid-template-columns: 1fr !important;
         gap: 16px;
     }
 
-    .card-stats-preview-row {
-        grid-template-columns: 1fr !important; /* Stacks internal micro health slots on ultra narrow displays */
-        gap: 6px;
-    }
-    
-    .budget-data-grid {
+    /* Stack the strategic hub grid from 3 columns down to 1 column */
+    .hub-grid {
         grid-template-columns: 1fr !important;
+        gap: 14px;
     }
 
-    .span-full-mobile {
-        grid-column: auto;
+    /* Fix split layout panels (like Exercise & Meal planners) so they fit perfectly */
+    .planner-split-layout,
+    .meal-planner-workspace,
+    .days-column {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    /* Adjust the weekly columns strip */
+    .weekly-strip-columns {
+        grid-template-columns: 1fr !important;
+        min-height: auto;
+        gap: 8px;
+    }
+
+    /* Scale down the massive hero text branding so it doesn't clip */
+    .hub-hero-branding h2 {
+        font-size: 2.2rem !important;
+    }
+
+    .digital-time-readout {
+        font-size: 2.5rem !important;
+    }
+
+    .main-content {
+        padding: 12px 4px !important;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    /* Ensure the dynamic visibility checkbox grid stays legible */
+    .visibility-checkbox-grid,
+    .color-combo-picker-row {
+        grid-template-columns: 1fr !important;
     }
 }
