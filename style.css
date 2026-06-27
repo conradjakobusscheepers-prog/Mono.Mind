@@ -250,3 +250,43 @@ body.hub-view-active .main-header h1 { opacity: 0; pointer-events: none; }
 .bullet-list { padding-left: 18px; font-size: 0.82rem; font-weight: 400; color: var(--text-main); line-height: 1.5; outline: none; }
 .shopping-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .text-block p { font-size: 0.82rem; font-weight: 400; color: var(--text-main); line-height: 1.4; outline: none; min-height: 20px; }
+
+/* ================= MOBILE MEDIA LAYOUT QUERY STACK ENGINE ================= */
+@media (max-width: 900px) {
+    body {
+        padding: 12px; /* Gives small screen viewports breathing room */
+    }
+    
+    .tracker-app-container {
+        gap: 16px;
+    }
+    
+    .tracker-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .tracker-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .tracker-grid {
+        grid-template-columns: 1fr !important; /* Forces cards to stack beautifully */
+        gap: 16px;
+    }
+
+    .card-stats-preview-row {
+        grid-template-columns: 1fr !important; /* Stacks internal micro health slots on ultra narrow displays */
+        gap: 6px;
+    }
+    
+    .budget-data-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .span-full-mobile {
+        grid-column: auto;
+    }
+}
